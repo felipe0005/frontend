@@ -1,80 +1,32 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Input from '@/components/Input';
+// index.tsx
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 
-export default function Home() {
-  const [email, setEmail] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-
-  const [password, setPassword] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-
-  //verifica que estemos poniendo un email valido
-  const handleEmailChange = (text: string) => {
-    setEmail(text);
-    if (!text.includes('@')) {
-      setEmailError('Email inválido');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  //verifica que la contraseña sea mayor a 6 caracteres
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-    if (text.length < 6) {
-      setPasswordError('La contraseña debe tener al menos 6 caracteres');
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const handleLogin = () => {
-    console.log('Login', { email, password });
-  };
-
-  //parte que se vera en el celu (login)
+export default function Page() {
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>Inicio de Sesión</Text>
+      <View style={styles.main}>
+        <Text style={styles.title}>Eventos Uni</Text>
+        <Text style={styles.subtitle}>Sistema de Gestión Universitaria</Text>
 
-        <Input
-          label="Email"
-          value={email}
-          onChangeText={handleEmailChange}
-          placeholder="Ingrese su email"
-          error={emailError}
-        />
+        <View style={styles.buttonContainer}>
+          <Link href="/LoginScreen" asChild>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+          </Link>
 
-        <Input
-          label="Contraseña"
-          value={password}
-          onChangeText={handlePasswordChange}
-          placeholder="Ingrese su contraseña"
-          secureTextEntry={true}
-          error={passwordError}
-        />
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            (emailError || passwordError || !email || !password) && styles.buttonDisabled,
-          ]}
-          disabled={!!emailError || !!passwordError || !email || !password}
-          onPress={handleLogin}>
-          <Text style={styles.buttonText}>Iniciar Sesión</Text>
-        </TouchableOpacity>
-        <Link href="/RegisterScreen" style={styles.linkText}>
-          ¿No tenés cuenta? Registrate
-        </Link>
+          <Link href="/RegisterScreen" asChild>
+            <TouchableOpacity style={styles.buttonRegister}>
+              <Text style={styles.buttonText}>Registrarse</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
       </View>
     </View>
   );
 }
 
-//estilos del formulario
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -82,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f2f6fc',
   },
-  form: {
+  main: {
     width: '90%',
     backgroundColor: '#fff',
     padding: 20,
@@ -92,33 +44,42 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 5,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#1f2937',
+    marginBottom: 16,
     textAlign: 'center',
-    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#6b7280',
+    marginBottom: 32,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    gap: 16,
   },
   button: {
-    marginTop: 20,
     backgroundColor: '#4f46e5',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
+    width: '100%',
   },
-  buttonDisabled: {
-    backgroundColor: '#a5b4fc',
+  buttonRegister: {
+    backgroundColor: '#6366f1',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    width: '100%',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  linkText: {
-    color: '#4f46e5',
-    textAlign: 'center',
-    marginTop: 15,
-    fontWeight: '600',
   },
 });

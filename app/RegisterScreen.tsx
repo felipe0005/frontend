@@ -74,7 +74,7 @@ export default function Register() {
           }>
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
-        <Link href="/">¿Ya tenés cuenta? Inicia sesión</Link>
+        <Link href="/LoginScreen">¿Ya tenés cuenta? Inicia sesión</Link>
       </View>
     </View>
   );
